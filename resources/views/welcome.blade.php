@@ -21,12 +21,21 @@
         </style>
     </head>
     <body class="antialiased bg-gray-100 dark:bg-gray-900">
-        <div class="relative flex">
-            <div class="mx-auto">
-                <div class="ml-4 text-sm text-gray-500 sm:ml-0">
-                    <h1>Bienvenue sur l'API</h1>
-                    Version {{ shell_exec('git describe --tags --abbrev=0') }}
-                </div>
+        <div class="relative">
+            <div class="ml-4 mr-4 text-gray-200">
+                <h1 class="text-center">Bienvenue sur l'API {{ shell_exec('git describe --tags --abbrev=0') }}</h1>
+
+                @if(isset($test))
+                    Débogage en cours
+                    <h3 class="text-center">Variable</h3>
+                        <?php dump($test) ?>
+                    <h4 class="text-center">Items</h4>
+
+                    @foreach($test as $t)
+                            <?php dump($t) ?>
+                    @endforeach
+                @endif
+
             </div>
         </div>
     </body>
