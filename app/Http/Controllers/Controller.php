@@ -17,7 +17,7 @@ class Controller extends BaseController
     public static function testDB()
     {
         // $r = variable que l'on veut tester
-        $r = Resource::all();
+//        $r = Resource::all();
         $r = User::all();
 
         return view('welcome')->with('test', $r);
