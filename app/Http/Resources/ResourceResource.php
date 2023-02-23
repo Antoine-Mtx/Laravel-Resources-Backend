@@ -22,6 +22,7 @@ class ResourceResource extends JsonResource
             'id_category' => $this->id_category,
             'id_user' => $this->id_user,
             'visibility' => $this->visibility,
+            'archived' => $this->archived,
             'created_at' => $this->created_at,
             'published_at' => $this->published_at,
             'updated_at' => $this->updated_at,

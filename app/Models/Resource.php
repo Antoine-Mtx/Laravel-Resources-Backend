@@ -18,6 +18,7 @@ class Resource extends Model
         'id_category',
         'id_user',
         'visibility',
+        'archived',
         'published_at',
         'archived_at',
         'validated_at',

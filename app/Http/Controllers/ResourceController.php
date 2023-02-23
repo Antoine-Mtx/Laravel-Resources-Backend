@@ -20,7 +20,7 @@ class ResourceController extends Controller
     }
 
 
-    public function show(Resource $resource, Request $request): ResourceResource
+    public function show(Request $request, Resource $resource): ResourceResource
     {
         return new ResourceResource($resource);
     }
@@ -36,22 +36,21 @@ class ResourceController extends Controller
     }
 
 
-    public function update(A2usersUpdateRequest $request, A2users $a2user): JsonResponse
+    public function update(Request $request, Resource $resource)
     {
-//        $a2user->update($request->all());
-//
-//        return (new A2usersResource($a2user))
-//            ->response()
-//            ->setStatusCode(Response::HTTP_ACCEPTED);
+        $resource->update($request->all());
 
-        return response()->json('Edit');
+        return (new ResourceResource($resource))
+            ->response()
+            ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
 
-    public function destroy(A2users $a2user): HttpResponse
+    public function destroy(Resource $resource)
     {
-//        $a2user->delete();
-
-        return response()->json('Delete');
+        $resource->update(['archived' => 1]);
+        return (new ResourceResource($resource))
+            ->response()
+            ->setStatusCode(Response::HTTP_OK);
     }
 }
