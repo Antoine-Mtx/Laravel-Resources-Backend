@@ -24,6 +24,7 @@
         <div class="relative">
             <div class="ml-4 mr-4 text-gray-200">
                 <h1 class="text-center">Bienvenue sur l'API {{ shell_exec('git describe --tags --abbrev=0') }}</h1>
+                <p class="text-center">Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</p>
 
                 @if(isset($test))
                     Débogage en cours
