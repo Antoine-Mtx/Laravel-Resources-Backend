@@ -16,8 +16,6 @@ class RegisterController extends Controller
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
             $token =  $user->createToken('RR', ['*'], now()->addMinutes(60))->plainTextToken;
-//            $user->api_token = $token;
-//            $user->save();
 
             return response()
                 ->json([
