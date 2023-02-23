@@ -17,3 +17,5 @@ use App\Http\Controllers\Controller;
 Route::view('/', 'welcome')->name('welcome');
 
 Route::get('/test', [Controller::class, 'testDB'])->name('test');
+
+Auth::routes();
