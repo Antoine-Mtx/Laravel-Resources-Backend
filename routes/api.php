@@ -25,3 +25,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('category', CategoryController::class);
 });
 
+// Offline routes
+// Affiche liste ressources visibles
+// Affiche ressource + commentaires associés
+

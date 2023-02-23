@@ -26,7 +26,6 @@ class User extends Authenticatable
         'avatar',
         'roles',
         'verified',
-//        'api_token',
     ];
 
     /**
@@ -36,7 +35,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-//        'api_token',
     ];
 
     /**
