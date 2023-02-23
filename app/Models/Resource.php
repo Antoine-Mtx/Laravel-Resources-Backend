@@ -11,4 +11,20 @@ class Resource extends Model
 
     protected $table = 'resource';
 
+    protected $fillable = [
+        'name',
+        'description',
+        'image',
+        'id_category',
+        'id_user',
+        'visibility',
+        'published_at',
+        'archived_at',
+        'validated_at',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 }

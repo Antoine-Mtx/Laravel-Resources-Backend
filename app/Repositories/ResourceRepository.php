@@ -8,7 +8,7 @@ class ResourceRepository
 {
 
     public static function getOne($request){
-        $resource = Resource::where('id', $request->id)->get();
+        $resource = Resource::where('id', $request)->get();
         return $resource;
     }
 }
