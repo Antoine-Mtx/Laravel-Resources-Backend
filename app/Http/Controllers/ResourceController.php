@@ -4,29 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ResourceResource;
 use App\Models\Resource;
-use App\Services\ResourceService;
-use App\Repositories\ResourceRepository;
-
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResourceController extends Controller
 {
+    /**
+     * @desc Renvoi toutes les ressources (get api/resource)
+     * @param Request $request
+     * @return AnonymousResourceCollection
+     */
     public function index(Request $request): AnonymousResourceCollection
     {
         return ResourceResource::collection(Resource::all());
     }
 
-
+    /**
+     * @desc Renvoi une ressource (get : api/resource/id)
+     * @param Request $request
+     * @param Resource $resource
+     * @return ResourceResource
+     */
     public function show(Request $request, Resource $resource): ResourceResource
     {
         return new ResourceResource($resource);
     }
 
-
-    public function store(Request $request)
+    /**
+     * @desc Ajoute une ressource (post : api/resource + {data})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function store(Request $request): JsonResponse
     {
         $resource = Resource::create($request->all());
 
@@ -35,8 +46,13 @@ class ResourceController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-
-    public function update(Request $request, Resource $resource)
+    /**
+     * @desc Modifie une ressource (patch : api/resource/id + {data})
+     * @param Request $request
+     * @param Resource $resource
+     * @return JsonResponse
+     */
+    public function update(Request $request, Resource $resource): JsonResponse
     {
         $resource->update($request->all());
 
@@ -45,8 +61,13 @@ class ResourceController extends Controller
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-
-    public function destroy(Resource $resource)
+    /**
+     * @desc Archive une ressource (delete : api/resource/id)
+     * @param Request $request
+     * @param Resource $resource
+     * @return JsonResponse
+     */
+    public function destroy(Request $request, Resource $resource): JsonResponse
     {
         $resource->update(['archived' => 1]);
         return (new ResourceResource($resource))
