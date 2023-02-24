@@ -19,13 +19,15 @@ use App\Http\Controllers\CategoryController;
 */
 
 Route::post('login', [RegisterController::class, 'login']);
+Route::post('register', [RegisterController::class, 'register']);
 
+// Authenticated Routes
 Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('resource', ResourceController::class);
     Route::apiResource('category', CategoryController::class);
 });
 
-// Offline routes
+// Offline Routes
 // Affiche liste ressources visibles
 // Affiche ressource + commentaires associés
 
