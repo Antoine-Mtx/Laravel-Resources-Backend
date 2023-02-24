@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ResourceResource;
 use App\Models\Resource;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
+use function MongoDB\BSON\toJSON;
 
 class ResourceController extends Controller
 {
@@ -37,13 +39,23 @@ class ResourceController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
-        $resource = Resource::create($request->all());
+        try {
+            $resource = Resource::create($request->all());
 
-        return (new ResourceResource($resource))
-            ->response()
-            ->setStatusCode(Response::HTTP_CREATED);
+            $type = match ($request->type) {
+                'information' => InformationController::store($resource->id, $request->information),
+                'event' => true,
+                'tutorial' => TutorialController::store($resource->id, $request->tutorial),
+            };
+
+            return (new ResourceResource($resource))
+                ->response()
+                ->setStatusCode(Response::HTTP_CREATED);
+        } catch (Exception $e) {
+            return self::sendError($e->getMessage());
+        }
     }
 
     /**

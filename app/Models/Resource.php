@@ -14,7 +14,7 @@ class Resource extends Model
     protected $fillable = [
         'name',
         'description',
-        'image',
+        'type',
         'id_category',
         'id_user',
         'visibility',

@@ -10,6 +10,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends BaseController
 {
@@ -21,6 +22,13 @@ class Controller extends BaseController
 //        $r = User::all();
         $r = Auth();
         return view('welcome')->with('test', $r);
+    }
+
+    public static function sendError($error = 'Une erreur est survenue.')
+    {
+        return response()
+            ->json(['error' => $error])
+            ->setStatusCode(Response::HTTP_UNAUTHORIZED);
     }
 
 }
