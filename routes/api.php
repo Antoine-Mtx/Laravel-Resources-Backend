@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\RegisterController;
@@ -25,9 +25,15 @@ Route::post('register', [RegisterController::class, 'register']);
 Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('resource', ResourceController::class);
     Route::apiResource('category', CategoryController::class);
+    Route::apiResource('comment', CommentController::class);
+
+    // Custom Routes :
+    // RessourcesOfUser
+
+
 });
 
-// Offline Routes
+// Offline Routes (accessible aussi quand utilisateur connecté)
 // Affiche liste ressources visibles
 // Affiche ressource + commentaires associés
 

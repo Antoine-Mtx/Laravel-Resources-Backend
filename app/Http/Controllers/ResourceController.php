@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
-use function MongoDB\BSON\toJSON;
 
 class ResourceController extends Controller
 {
