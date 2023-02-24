@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class TutorialController extends Controller
 {
     /**
-     * @desc Ajoute une information avec l'id_resource associé
+     * @desc Ajoute un tutorial avec l'id_resource associé
      * @param string $id
      * @param array $data
      * @return TutorialResource
