@@ -27,13 +27,22 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('category', CategoryController::class);
     Route::apiResource('comment', CommentController::class);
 
-    // Custom Routes :
-    // RessourcesOfUser
+    // TODO : Custom Routes User :
+        // RessourcesOfUser
+
+
+    // TODO : Custom Routes Admin/Modo :
+        // Ressources a valider
+
+
+    // TODO : + middlewares roles
 
 
 });
 
-// Offline Routes (accessible aussi quand utilisateur connecté)
-// Affiche liste ressources visibles
-// Affiche ressource + commentaires associés
+Route::get('get_visible_resources', [ResourceController::class, 'get_visible_resources']);
+Route::get('get_one_resource', [ResourceController::class, 'get_one_resource']);
+
+// TODO : Custom Routes (Offline) (accessible aussi quand utilisateur connecté)
+    // get_one_ressource() : Affiche ressource + auteur + category + contenu + commentaires associés
 
