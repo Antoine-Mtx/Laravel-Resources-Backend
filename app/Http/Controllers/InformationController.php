@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\InformationResource;
 use App\Models\Information;
-use Exception;
+use App\Repositories\InformationRepository;
+
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class InformationController extends Controller
 {
@@ -26,5 +26,16 @@ class InformationController extends Controller
         $information = Information::create($params);
 
         return new InformationResource($information);
+    }
+
+
+    /**
+     * @desc Liste ressources type info visibles + non archivées , avec auteur (user) & category & info
+     * @return JsonResponse
+     */
+    public static function get_visible_informations()
+    {
+        $informations = InformationRepository::get_visible_informations();
+        return response()->json($informations);
     }
 }

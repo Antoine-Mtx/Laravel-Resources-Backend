@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ResourceRepository
 {
-    public static function get_visible_resources(): Collection|array
+    public static function get_visible_resources(): Collection
     {
         $resources = Resource::with('category')
             ->with('user')
@@ -18,7 +18,7 @@ class ResourceRepository
         return $resources;
     }
 
-    public static function get_one_tutorial($id): Collection|array
+    public static function get_one_tutorial($id): Collection
     {
         $resource = Resource::where('id', $id)
             ->with('category')
@@ -30,7 +30,7 @@ class ResourceRepository
         return $resource;
     }
 
-    public static function get_one_information($id): Collection|array
+    public static function get_one_information($id): Collection
     {
         $resource = Resource::where('id', $id)
             ->with('category')

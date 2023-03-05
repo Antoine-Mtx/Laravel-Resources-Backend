@@ -1,11 +1,14 @@
 <?php
 
-use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
+
+use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\TutorialController;
+use App\Http\Controllers\InformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +45,11 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 Route::get('get_visible_resources', [ResourceController::class, 'get_visible_resources']);
 Route::get('get_one_resource', [ResourceController::class, 'get_one_resource']);
+
+Route::get('get_visible_tutorials' , [TutorialController::class, 'get_visible_tutorials']);
+
+Route::get('get_visible_informations' , [InformationController::class, 'get_visible_informations']);
+
 
 // TODO : Custom Routes (Offline) (accessible aussi quand utilisateur connecté)
     // get_one_ressource() : Affiche ressource + auteur + category + contenu + commentaires associés
