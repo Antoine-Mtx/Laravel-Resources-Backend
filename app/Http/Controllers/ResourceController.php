@@ -8,7 +8,6 @@ use App\Repositories\ResourceRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResourceController extends Controller
@@ -23,7 +22,6 @@ class ResourceController extends Controller
     {
         $resources = Resource::all();
         return response()->json(ResourceResource::collection($resources));
-
     }
 
     /**

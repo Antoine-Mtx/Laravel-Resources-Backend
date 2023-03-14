@@ -6,7 +6,6 @@ use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
@@ -14,22 +13,23 @@ class CategoryController extends Controller
     /**
      * @desc Renvoi toutes les catégories (get api/category)
      * @param Request $request
-     * @return AnonymousResourceCollection
+     * @return JsonResponse
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request): JsonResponse
     {
-        return CategoryResource::collection(Category::all());
+        $category = Category::all();
+        return response()->json(CategoryResource::collection($category));
     }
 
     /**
      * @desc Renvoi une catégorie (get : api/category/id)
      * @param Request $request
      * @param Category $category
-     * @return CategoryResource
+     * @return JsonResponse
      */
-    public function show(Request $request, Category $category): CategoryResource
+    public function show(Request $request, Category $category): JsonResponse
     {
-        return new CategoryResource($category);
+        return response()->json(new CategoryResource($category));
     }
 
     /**

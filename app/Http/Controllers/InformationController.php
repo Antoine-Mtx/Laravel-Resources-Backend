@@ -33,7 +33,7 @@ class InformationController extends Controller
      * @desc Liste ressources type info visibles + non archivées , avec auteur (user) & category & info
      * @return JsonResponse
      */
-    public static function get_visible_informations()
+    public static function get_visible_informations(): JsonResponse
     {
         $informations = InformationRepository::get_visible_informations();
         return response()->json($informations);
