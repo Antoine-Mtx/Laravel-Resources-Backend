@@ -6,7 +6,6 @@ use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
 class CommentController extends Controller
@@ -14,11 +13,12 @@ class CommentController extends Controller
     /**
      * @desc Renvoi tous les commentaires (get api/comment)
      * @param Request $request
-     * @return AnonymousResourceCollection
+     * @return JsonResponse
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request): JsonResponse
     {
-        return CommentResource::collection(Comment::all());
+        $comments = Comment::all();
+        return response()->json(CommentResource::collection($comments));
     }
 
     /**
