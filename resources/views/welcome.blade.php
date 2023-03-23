@@ -37,6 +37,8 @@
                     @endforeach
                 @endif
 
+				<!-- <button type="button" onclick="window.location='{{ url("users/index") }}'">Button</button> -->
+
             </div>
         </div>
     </body>

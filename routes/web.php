@@ -16,3 +16,8 @@ use App\Http\Controllers\Controller;
 
 Route::view('/', 'welcome')->name('welcome');
 Route::get('/test', [Controller::class, 'testDB'])->name('test');
+
+
+Route::get('/send-mail', function () {
+    \Mail::to('roulier.lucie@outlook.fr')->send(new \App\Mail\GmailTestMail());
+});
