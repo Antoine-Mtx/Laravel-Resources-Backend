@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
@@ -24,6 +25,7 @@ class RegisterController extends Controller
 
             // Envoi mail de vérification : obtient token à vérifier
             $token = $this::verifyMail($input['email']);
+            $user['token'] = $token;
 
             return response()
                 ->json($user)
@@ -68,10 +70,16 @@ class RegisterController extends Controller
         }
     }
 
-    private static function verifyMail($to = 'roulier.lucie@outlook.fr')
+    private static function verifyMail($email = 'roulier.lucie@outlook.fr')
     {
-        // TODO : create token + save DB
-        Mail::to($to)->send(new \App\Mail\VerifyEmail());
-        return 'montoken';
+        // TODO : méthode dans model user pour opti
+        $token = Str::random(60);
+        $user = User::where('email', $email)->get()->first();
+        $user->verifyToken = $token;
+        $user->save();
+
+        // TODO : appeler mail avec token + user mail
+        Mail::to($email)->send(new \App\Mail\VerifyEmail());
+        return $token;
     }
 }
