@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 
@@ -18,6 +19,4 @@ Route::view('/', 'welcome')->name('welcome');
 Route::get('/test', [Controller::class, 'testDB'])->name('test');
 
 
-Route::get('/send-mail', function () {
-    \Mail::to('roulier.lucie@outlook.fr')->send(new \App\Mail\GmailTestMail());
-});
+Route::get('/send-mail', [RegisterController::class, 'verifymail'])->name('send-mail');
