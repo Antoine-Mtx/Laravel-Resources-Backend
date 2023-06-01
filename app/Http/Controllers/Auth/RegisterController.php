@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\VerifyEmail;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -24,24 +25,22 @@ class RegisterController extends Controller
             $user = User::create($input);
 
             // Envoi mail de vérification : obtient token à vérifier
-            $token = $this::verifyMail($input['email']);
-            $user['token'] = $token;
+            $response = $this::verifyMail($input['email']);
 
             return response()
-                ->json($user)
+                ->json($response)
                 ->setStatusCode(Response::HTTP_CREATED);
         } catch (Exception $e) {
             if($user)
-            {
                 $user->delete();
-            }
-            if($e->getCode() == 23000) {
+
+            if($e->getCode() == 23000) { // contraintes BDD
                 $error = match (true) {
                     str_contains($e->getMessage(), 'users.email') => 'Veuillez utiliser une autre adresse mail.',
                     str_contains($e->getMessage(), 'users.username') => 'Veuillez utiliser un autre nom d\'utilisateur.',
                     default => 'Impossible de créer un compte avec ces informations, veuillez contacter un administrateur.',
                 };
-            } else if(str_contains($e->getMessage(), 'RFC 2822')) {
+            } else if(str_contains($e->getMessage(), 'RFC 2822')) { // problème format email
                 $error = "Veuillez fournir une addresse mail valide.";
             } else {
                 $error = 'Une erreur est survenue lors de la création du compte. Veuillez réessayer plus tard.';
@@ -70,16 +69,18 @@ class RegisterController extends Controller
         }
     }
 
+    /**
+     * @desc Créer un token de vérification + envoi d'un mail avec url + token pour vérifier le compte
+     * @param $email string l'uutilisateur
+     * @return boolean
+     */
     private static function verifyMail($email = 'roulier.lucie@outlook.fr')
     {
-        // TODO : méthode dans model user pour opti
-        $token = Str::random(60);
-        $user = User::where('email', $email)->get()->first();
-        $user->verifyToken = $token;
-        $user->save();
+        $user = User::where('email', $email)->first();
+        $token = $user->saveToken();
 
-        // TODO : appeler mail avec token + user mail
-        Mail::to($email)->send(new \App\Mail\VerifyEmail());
-        return $token;
+        // TODO : appeler mail avec $token + $user->username
+        Mail::to($email)->send(new VerifyEmail($user->username, $token));
+        return true;
     }
 }
